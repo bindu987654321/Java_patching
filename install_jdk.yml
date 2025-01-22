@@ -1,0 +1,23 @@
+---
+- name: Install JDK and JRE on Windows VM
+  hosts: all
+  tasks:
+    - name: Download JDK installer
+      win_get_url:
+        url: "{{ jdk_url }}"
+        dest: "C:\\temp\\jdk-installer.exe"
+
+    - name: Install JDK
+      win_command: 'C:\\temp\\jdk-installer.exe /s INSTALLDIR="{{ install_dir }}"'
+      register: jdk_install
+
+    - debug:
+        var: jdk_install
+
+    - name: Verify Java version
+      win_command: '"{{ install_dir }}\\bin\\java.exe" -version'
+      register: java_version
+
+    - name: Display Java version
+      debug:
+        msg: "{{ java_version.stdout }}"
