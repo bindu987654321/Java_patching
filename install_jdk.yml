@@ -7,15 +7,16 @@
         url: "{{ jdk_url }}"
         dest: "C:\\temp\\jdk-installer.exe"
 
-    - name: Install JDK
-      win_command: 'C:\\temp\\jdk-installer.exe /s INSTALLDIR="{{ install_dir }}"'
-      register: jdk_install
-
-    - debug:
-        var: jdk_install
+    - name: Install JDK silently
+      win_package:
+        path: "C:\\temp\\jdk-installer.exe"
+        arguments:
+          - /s
+          - INSTALLDIR=C:\\Program Files\\Java\\jdk1.8.0_431
+        state: present
 
     - name: Verify Java version
-      win_command: '"{{ install_dir }}\\bin\\java.exe" -version'
+      win_command: '"C:\\Program Files\\Java\\jdk1.8.0_431\\bin\\java.exe" -version'
       register: java_version
 
     - name: Display Java version
