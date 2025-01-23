@@ -7,3 +7,4 @@ all:
       ansible_connection: winrm
       ansible_winrm_transport: ntlm
       ansible_winrm_server_cert_validation: ignore
+      ansible_python_interpreter: ${PYTHON_HOME}
